@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMAJI DIGITAL — Lihat Produk UMKM dalam 3D & AR</title>
+
+    <!-- Google Fonts: Syne (display) + DM Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Google Model Viewer for 3D/AR -->
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"
+    ></script>
+  </head>
+  <body>
+    <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+    <nav id="navbar">
+      <div class="container">
+        <div class="nav-inner">
+          <!-- Logo -->
+          <a href="#hero" class="nav-logo">
+            <div class="logo-icon"></div>
+            IMAJI DIGITAL
+          </a>
+
+          <!-- Desktop Links -->
+          <ul class="nav-links">
+            <li><a href="#about">Tentang</a></li>
+            <li><a href="#demo">Demo Produk</a></li>
+            <li><a href="#contact">Kontak</a></li>
+          </ul>
+
+          <!-- Mobile Hamburger -->
+          <button class="nav-menu-btn" id="menuBtn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+        <!-- Mobile Nav Dropdown -->
+        <nav class="nav-mobile" id="mobileMenu">
+          <a href="#about" onclick="closeMobileMenu()">Tentang</a>
+          <a href="#demo" onclick="closeMobileMenu()">Demo Produk</a>
+          <a href="#contact" onclick="closeMobileMenu()">Kontak</a>
+        </nav>
+      </div>
+    </nav>
+
+    <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+    <section id="hero">
+      <div class="container">
+        <!-- Badge -->
+        <div class="hero-badge">Teknologi AR untuk produk UMKM</div>
+
+        <!-- Headline -->
+        <h1 class="hero-title">
+          Lihat Produk<br />
+          dalam <span class="accent">3D & AR</span><br />
+          Langsung di Browser
+        </h1>
+
+        <!-- Sub headline -->
+        <p class="hero-sub">
+          Akses interaktif produk secara langsung hanya dengan melalui QR Code dengan pengalaman berbasis browser yang cepat dan efisien.
+        </p>
+
+        <!-- Model Viewer Container -->
+        <div class="model-container">
+          <!-- Loading overlay (hidden once model loads) -->
+          <div class="model-loading" id="heroLoading">
+            <div class="spinner"></div>
+            <p>Memuat model 3D…</p>
+          </div>
+
+          <!--
+          model-viewer component:
+          - src: GLTF/GLB 3D model URL
+          - ios-src: USDZ file for iOS AR (Quick Look)
+          - ar: enables AR button
+          - ar-modes: webxr (Android Chrome) + scene-viewer (Android Google AR) + quick-look (iOS)
+          - camera-controls: allows user to rotate/zoom
+        -->
+          <model-viewer
+            id="heroViewer"
+            src="3D/out (13).glb"
+            ios-src="3D/Arm_chair__Furniture.usdz"
+            alt="Contoh produk UMKM dalam 3D"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            camera-controls
+            auto-rotate
+            rotation-per-second="20deg"
+            shadow-intensity="1"
+            exposure="0.9"
+            environment-image="neutral"
+            poster="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          >
+            <!-- Slot for custom AR button (hidden; model-viewer provides its own) -->
+          </model-viewer>
+
+          <!-- Controls: 3D and AR buttons -->
+          <div class="model-controls">
+            <!-- "Tampilkan 3D" button  focuses/resets the 3D model camera -->
+            <button
+              class="btn btn-outline"
+              id="btn3DHero"
+              onclick="show3D('heroViewer')"
+            >
+              Tampilkan 3D
+            </button>
+
+            <!-- "Tampilkan dalam AR" button  triggers AR session -->
+            <button
+              class="btn btn-primary"
+              id="btnARHero"
+              onclick="showAR('heroViewer', 'ar-hint-hero')"
+            >
+              Tampilkan dalam AR
+            </button>
+          </div>
+
+          <!-- AR not supported hint (shown only if AR unavailable) -->
+          <div id="ar-hint-hero" class="ar-unsupported">
+            AR tidak tersedia di perangkat ini. Silakan buka di smartphone
+            Android / iOS.
+          </div>
+        </div>
+        <!-- /model-container -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+       ABOUT SECTION  "SCAN" explanation
+  ============================================================ -->
+    <section id="about">
+      <div class="container">
+        <div class="fade-up">
+          <p class="section-label">Jelajahi Tentang Kami</p>
+          <h2 class="section-title">
+            About<br /><span style="color: var(--accent)">Us</span>
+          </h2>
+          <p class="section-desc">
+            IMAJI DIGITAL datang untuk membantu UMKM lokal karena satu masalah nyata yaitu calon pembeli ragu membeli
+            produk UMKM secara online karena foto 2D tidak cukup untuk
+            menjelaskan ukuran, tekstur, dan kecocokan produk di ruangan mereka.
+            IMAJI DIGITAL membantu UMKM lokal bersaing di pasar digital dengan
+            menghadirkan pengalaman visualisasi 3D dan AR langsung di browser,
+            tanpa aplikasi sehingga calon pembeli bisa melihat produk secara
+            nyata sebelum memutuskan membeli.
+          </p>
+        </div>
+
+        <!-- 4-step cards -->
+        <div class="about-grid fade-up">
+          <div class="about-card" data-step="1">
+            <div class="card-icon">📱</div>
+            <h3>Scan QR</h3>
+            <p>
+              Akses pengalaman interaktif produk hanya dengan mengscan QR Code dengan Integrasi seamless yang menghadirkan visualisasi 3D secara langsung.
+            </p>
+          </div>
+
+          <div class="about-card" data-step="2">
+            <div class="card-icon">🌐</div>
+            <h3>Akses Melalui Browser</h3>
+            <p>
+              Website langsung terbuka di browser Chrome, Safari, atau browser
+              lain, tanpa perlu tambahan aplikasi.
+            </p>
+          </div>
+
+          <div class="about-card" data-step="3">
+            <div class="card-icon">🔲</div>
+            <h3>Lihat 3D</h3>
+            <p>
+              Tampilkan produk dalam format 3D interaktif dengan detail akurat dan tampilan 360° langsung melalui browser.
+            </p>
+          </div>
+
+          <div class="about-card" data-step="4">
+            <div class="card-icon">✨</div>
+            <h3>Mode AR</h3>
+            <p>
+             Rasakan pengalaman Augmented Reality yang memungkinkan produk ditempatkan secara real-time dengan akurasi ukuran dan proporsi yang presisi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       PRODUCT DEMO SECTION
+  ============================================================ -->
+    <section id="demo">
+      <div class="container">
+        <div class="fade-up">
+          <p class="section-label">Demo Produk</p>
+          <h2 class="section-title">
+            Coba Langsung <span style="color: var(--accent)">Sekarang</span>
+          </h2>
+          <p class="section-desc">
+            Berikut contoh produk yang sudah diintegrasikan dengan sistem
+            IMAJI DIGITAL. Putar modelnya atau coba tampilkan di ruangan Anda!
+          </p>
+        </div>
+
+        <div class="demo-wrapper fade-up">
+          <!-- 3D/AR viewer for demo product -->
+          <div class="demo-viewer">
+            <model-viewer
+              id="demoViewer"
+              src="3D/psx_furniture_pack_free.glb"
+              ios-src="3D/PSX_Furniture_Pack_Free.usdz"
+              alt="Produk UMKM contoh"
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              camera-controls
+              auto-rotate
+              rotation-per-second="15deg"
+              shadow-intensity="1.2"
+              exposure="0.85"
+              environment-image="neutral"
+            ></model-viewer>
+
+            <div class="model-controls">
+              <button class="btn btn-outline" onclick="show3D('demoViewer')">
+                3D
+              </button>
+              <button
+                class="btn btn-primary"
+                onclick="showAR('demoViewer', 'ar-hint-demo')"
+              >
+                AR
+              </button>
+            </div>
+
+            <div id="ar-hint-demo" class="ar-unsupported"></div>
+          </div>
+
+          <!-- Product info panel -->
+          <div class="demo-info">
+            <h3>Kerajinan Tangan Nusantara</h3>
+            <p>
+              Contoh produk lokal yang kini dapat dieksplorasi dalam format 3D dan Augmented Reality.
+              Visualisasi detail tekstur dan proporsi secara akurat membantu meningkatkan tingkat kepercayaan customer.
+            </p>
+
+            <div class="demo-tags">
+              <span class="tag green">✓ AR Ready</span>
+              <span class="tag green">✓ 3D Interactive</span>
+              <span class="tag">No App Needed</span>
+              <span class="tag">Mobile First</span>
+            </div>
+
+            <div class="demo-btns">
+              <button class="btn btn-outline" onclick="show3D('demoViewer')">
+                Tampilkan 3D
+              </button>
+              <button
+                class="btn btn-primary"
+                onclick="showAR('demoViewer', 'ar-hint-demo')"
+              >
+                Tampilkan dalam AR
+              </button>
+            </div>
+
+            <!-- AR unavailable hint for demo section -->
+            <div
+              id="ar-hint-demo-info"
+              class="ar-unsupported"
+              style="margin-top: 12px"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       CONTACT SECTION
+  ============================================================ -->
+    <section id="contact">
+      <div class="container">
+        <div class="fade-up">
+          <p class="section-label">Hubungi Kami</p>
+          <h2 class="section-title">
+            Daftarkan <span style="color: var(--accent)">Produk Anda</span>
+          </h2>
+          <p class="section-desc" style="margin: 0 auto 0">
+            Ingin produk UMKM Anda hadir dalam 3D dan AR? Hubungi tim kami lewat
+            WhatsApp untuk informasi lebih lanjut.
+          </p>
+        </div>
+
+        <div class="contact-box fade-up">
+          <h3>Siap Mulai?</h3>
+          <p>
+            Tim kami siap membantu digitalisasi katalog produk Anda menjadi
+            pengalaman 3D dan AR yang imersif cepat, mudah, terjangkau.
+          </p>
+          <div class="btn-wa-wrap">
+            <!--
+            WhatsApp CTA button:
+            Replace the number (6281234567890) with the business WhatsApp number
+          -->
+            <a
+              href="https://wa.me/6282266269384?text=Halo%2C%20saya%20tertarik%20mendaftarkan%20produk%20UMKM%20saya%20ke%20platform%20IMAJI%20DIGITAL."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-wa"
+            >
+              <!-- WhatsApp logo as SVG inline -->
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+                />
+                <path
+                  d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.882l6.233-1.441A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.5-5.243-1.376l-.375-.222-3.7.856.892-3.607-.244-.387A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"
+                />
+              </svg>
+              Chat via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+    <footer>
+      <div class="container">
+        <div class="foot-inner">
+          <div class="nav-logo" style="font-size: 16px">
+            <div class="logo-icon" style="width: 26px; height: 26px"></div>
+            IMAJI DIGITAL
+          </div>
+          <nav class="foot-links">
+            <a href="#hero">Beranda</a>
+            <a href="#about">Tentang</a>
+            <a href="#demo">Demo</a>
+            <a href="#contact">Kontak</a>
+          </nav>
+          <p>
+            © 2025 IMAJI DIGITAL Platform AR untuk UMKM Indonesia. Semua hak
+            dilindungi.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
